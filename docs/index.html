@@ -380,6 +380,7 @@
     .principle,
     .stage,
     .item,
+    .about-card,
     .decision-box,
     .contact-card,
     .archive-link {
@@ -444,6 +445,58 @@
       display: grid;
       grid-template-columns: minmax(0, 1.18fr) minmax(320px, 0.82fr);
       gap: 24px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      gap: 24px;
+    }
+
+    .about-card {
+      padding: 30px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent), var(--surface);
+    }
+
+    .about-card + .about-card {
+      background: linear-gradient(180deg, rgba(127, 82, 53, 0.08), transparent 72%), var(--surface-strong);
+      border-color: var(--line-strong);
+    }
+
+    .about-copy {
+      display: grid;
+      gap: 16px;
+    }
+
+    .about-copy p,
+    .about-facts li {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .about-facts {
+      list-style: none;
+      margin: 18px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .about-facts li {
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .about-facts li:first-child {
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .about-facts strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-size: 1rem;
     }
 
     .items-list {
@@ -571,6 +624,7 @@
       .hero,
       .section-head,
       .deliverables-grid,
+      .about-grid,
       .contact-grid,
       .approach-grid {
         grid-template-columns: 1fr;
@@ -734,6 +788,7 @@
       .narrative-block,
       .principle,
       .stage,
+      .about-card,
       .decision-box,
       .contact-card {
         padding: 20px;
@@ -780,6 +835,7 @@
       }
 
       .contact-grid,
+      .about-grid,
       .deliverables-grid,
       .approach-grid {
         gap: 16px;
@@ -858,6 +914,7 @@
         <nav class="nav-links" aria-label="Hauptnavigation">
           <a href="#approach-de">Arbeitsweise</a>
           <a href="#systems-de">Systeme</a>
+          <a href="#about-de">Über mich</a>
           <a href="#contact-de">Kontakt</a>
           <div class="language-bar" aria-label="Sprachauswahl">
             <label for="lang-de" class="lang-label-de">DE</label>
@@ -1062,6 +1119,50 @@
         </div>
       </section>
 
+      <section id="about-de" class="section-frame">
+        <div class="section-head">
+          <div class="section-tag">Über mich</div>
+          <div>
+            <h2>Erfahrung aus großen Systemen, verdichtet auf tragfähige Form.</h2>
+            <p class="section-copy">
+              Viel von dem, was ich heute baue, ist nicht aus Theorie entstanden, sondern aus Jahren in großen, anspruchsvollen Systemen, in denen Klarheit, Performance und Wartbarkeit nicht optional waren.
+            </p>
+          </div>
+        </div>
+
+        <div class="about-grid">
+          <article class="about-card">
+            <div class="about-copy">
+              <p>Ich bin Softwarearchitekt mit einem Hintergrund in groß angelegten Enterprise-Systemen, darunter Logistikplattformen im Budgetrahmen von mehreren Millionen.</p>
+              <p>Über die Jahre habe ich an komplexen Architekturen gearbeitet, in denen Performance, Klarheit und langfristige Wartbarkeit nicht nur wichtig, sondern geschäftskritisch waren. Vieles von dem, was ich heute baue, ist das Ergebnis dieser Umgebungen: gelernt unter Druck, später verfeinert, vereinfacht und auf eine höhere Kohärenz gebracht.</p>
+              <p>Meine aktuelle Arbeit, einschließlich Technology Speaks, ist für mich die destillierte Form dieser Erfahrung. Mich interessieren Systeme, die unter Druck verständlich bleiben, und Kooperationen, in denen Wert durch reale Ergebnisse sichtbar wird, nicht durch Versprechen.</p>
+            </div>
+          </article>
+
+          <aside class="about-card">
+            <div class="contact-label">Herkunft</div>
+            <ul class="about-facts">
+              <li>
+                <strong>Enterprise-Hintergrund</strong>
+                Große Plattformen mit hoher technischer und organisatorischer Komplexität.
+              </li>
+              <li>
+                <strong>Logistik im Millionenrahmen</strong>
+                Systeme, in denen Fehler teuer, Unschärfe spürbar und Struktur unverzichtbar war.
+              </li>
+              <li>
+                <strong>Destillierte Praxis</strong>
+                Technology Speaks und aktuelle Architekturarbeit als verdichtete Form dieser Erfahrung.
+              </li>
+              <li>
+                <strong>Wert durch Ergebnis</strong>
+                Zusammenarbeit dort, wo Nutzen im System sichtbar werden muss und nicht in der Erzählung.
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
       <section id="archive-de" class="section-frame">
         <div class="section-head">
           <div class="section-tag">Archiv</div>
@@ -1126,6 +1227,7 @@
         <nav class="nav-links" aria-label="Main navigation">
           <a href="#approach-en">Approach</a>
           <a href="#systems-en">Systems</a>
+          <a href="#about-en">About</a>
           <a href="#contact-en">Contact</a>
           <div class="language-bar" aria-label="Language switch">
             <label for="lang-de" class="lang-label-de">DE</label>
@@ -1326,6 +1428,50 @@
             <div class="contact-label">Decision logic</div>
             <h3>Value first. Decision after evidence.</h3>
             <p>The engagement can begin with a real use case. That way architecture is not sold by performance, but tested in context.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="about-en" class="section-frame">
+        <div class="section-head">
+          <div class="section-tag">About</div>
+          <div>
+            <h2>Experience from large systems, condensed into durable form.</h2>
+            <p class="section-copy">
+              Much of what I build today did not come from theory alone, but from years inside demanding systems where clarity, performance, and maintainability were critical.
+            </p>
+          </div>
+        </div>
+
+        <div class="about-grid">
+          <article class="about-card">
+            <div class="about-copy">
+              <p>I’m a software architect with a background in large-scale enterprise systems, including logistics platforms in the multi-million budget range.</p>
+              <p>Over the years, I’ve worked on complex architectures where performance, clarity, and long-term maintainability were not optional, but critical. Much of what I build today is the result of lessons learned in those environments, later refined, simplified, and pushed to a higher level of coherence.</p>
+              <p>My current work, including Technology Speaks, represents that distilled experience. I value systems that remain understandable under pressure and collaborations where value becomes visible through real outcomes, not promises.</p>
+            </div>
+          </article>
+
+          <aside class="about-card">
+            <div class="contact-label">Background</div>
+            <ul class="about-facts">
+              <li>
+                <strong>Enterprise systems</strong>
+                Large platforms with high technical and organizational complexity.
+              </li>
+              <li>
+                <strong>Multi-million logistics work</strong>
+                Systems where mistakes were expensive, ambiguity was visible, and structure was necessary.
+              </li>
+              <li>
+                <strong>Distilled practice</strong>
+                Technology Speaks and my current architecture work as a condensed form of that experience.
+              </li>
+              <li>
+                <strong>Value through outcomes</strong>
+                Collaborations where usefulness has to become visible inside the system, not just in the pitch.
+              </li>
+            </ul>
           </aside>
         </div>
       </section>
