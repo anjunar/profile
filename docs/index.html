@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO & Meta -->
+  <title>Patrick Bittner | Softwarearchitektur für komplexe Webplattformen</title>
+  <meta name="description" content="Patrick Bittner — Remote-Softwarearchitekt für komplexe Webplattformen. Architektur mit Klarheit, Tiefe und Gewicht.">
+  <meta name="author" content="Patrick Bittner">
+  <meta name="theme-color" content="#05070a">
+  
+  <style>
+    :root {
+      --bg: #05070a;
+      --bg-elevated: rgba(13, 18, 26, 0.85);
+      --line: rgba(197, 210, 224, 0.08);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --soft: #cbd5e1;
+      --accent: #f0d8a8; /* Gold der Morgensonne */
+      --accent-soft: rgba(240, 216, 168, 0.12);
+      --max-width: 1200px;
+      --radius: 28px;
+      --shadow: 0 32px 96px rgba(0, 0, 0, 0.45);
+      --transition-resonant: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg); }
+
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(240, 216, 168, 0.06), transparent 40%),
+        radial-gradient(circle at 80% 0%, rgba(125, 211, 252, 0.05), transparent 30%),
+        linear-gradient(180deg, #05070a 0%, #080c12 50%, #05070a 100%);
+      line-height: 1.7;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- Language Toggle (No-JS) --- */
+    .lang-state { display: none; }
+    .lang-de-content, .lang-en-content { display: none; }
+
+    #lang-de:checked ~ .lang-de-content { display: block; }
+    #lang-en:checked ~ .lang-en-content { display: block; }
+
+    .language-bar {
+      display: flex;
+      gap: 8px;
+      margin-left: 24px;
+      padding-left: 24px;
+      border-left: 1px solid var(--line);
+    }
+
+    .language-bar label {
+      cursor: pointer;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      transition: var(--transition-resonant);
+    }
+
+    #lang-de:checked ~ * .lang-label-de,
+    #lang-en:checked ~ * .lang-label-en {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: transparent;
+    }
+
+    /* --- Global Elements & Links --- */
+    a {
+      color: var(--accent); /* Kein Standard-Lila mehr */
+      text-decoration: none;
+      transition: var(--transition-resonant);
+    }
+
+    a:hover { color: var(--text); }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 60px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      background: rgba(5, 7, 10, 0.75);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .brand-mark {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* --- Typography --- */
+    h1, h2, h3 { font-family: Georgia, serif; font-weight: 400; margin: 0; color: var(--text); }
+    
+    h1 {
+      font-size: clamp(3.2rem, 8vw, 6.2rem);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      text-wrap: balance;
+    }
+
+    h2 {
+      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+
+    /* --- Components --- */
+    section { padding: 100px 0; border-bottom: 1px solid var(--line); }
+
+    .hero {
+      padding: 120px 0 80px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
+      gap: 80px;
+      align-items: end;
+      border: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .hero-copy {
+      margin-top: 32px;
+      max-width: 44rem;
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
+      color: var(--soft);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 20px;
+      margin-top: 56px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 56px;
+      padding: 0 32px;
+      border-radius: 999px;
+      background: var(--text);
+      color: var(--bg);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition-resonant);
+      border: none;
+      cursor: pointer;
+    }
+
+    .button:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 15px 30px rgba(255, 255, 255, 0.1);
+      color: var(--bg); /* Text bleibt dunkel auf hellem Grund */
+      background: #ffffff; /* Leichtes Aufhellen des Hintergrunds */
+    }
+
+    .button-secondary:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+    }
+
+    .hero-panel {
+      padding: 48px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .panel-label {
+      color: var(--muted);
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .panel-quote {
+      font-size: 2.8rem;
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+
+    .panel-note { color: var(--muted); font-size: 1rem; max-width: 32ch; }
+
+    .section-intro {
+      display: grid;
+      grid-template-columns: 0.7fr 1.3fr;
+      gap: 64px;
+      margin-bottom: 64px;
+    }
+
+    .section-tag {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      padding: 48px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      transition: var(--transition-resonant);
+    }
+
+    .card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.12); }
+    .card h3 { font-size: 1.05rem; margin-bottom: 16px; font-family: system-ui; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text); }
+    .card p { color: var(--muted); font-size: 1.05rem; }
+
+    .detail-list { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 12px; }
+    .detail-list li { padding-left: 20px; position: relative; color: var(--muted); }
+    .detail-list li::before {
+      content: ""; position: absolute; left: 0; top: 12px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .value-box {
+      padding: 72px;
+      border-radius: var(--radius);
+      background: radial-gradient(circle at top right, rgba(240, 216, 168, 0.08), transparent 40%), var(--bg-elevated);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .links-list { display: grid; gap: 16px; margin-top: 32px; }
+    .links-list a {
+      display: flex; justify-content: space-between; padding: 24px;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--line);
+      border-radius: 20px; color: var(--text);
+    }
+    .links-list a:hover { transform: scale(1.01); background: rgba(255,255,255,0.05); border-color: var(--accent); color: var(--accent); }
+    .links-list a span:last-child { color: var(--muted); font-size: 0.9rem; }
+
+    .footer { padding: 64px 0; text-align: center; color: var(--muted); font-size: 0.9rem; }
+
+    @media (max-width: 1024px) {
+      .hero, .section-intro, .card-grid { grid-template-columns: 1fr; gap: 48px; }
+      .nav { flex-direction: column; gap: 24px; text-align: center; }
+      .language-bar { margin: 0; padding: 0; border: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Language State (Must be first for sibling selectors) -->
+  <input type="radio" name="lang" id="lang-de" class="lang-state" checked>
+  <input type="radio" name="lang" id="lang-en" class="lang-state">
+
+  <!-- GERMAN CONTENT -->
+  <div class="lang-de-content" lang="de">
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="#"><span class="brand-mark"></span>Patrick Bittner</a>
+        <nav class="nav-links">
+          <a href="#work-de">Was ich tue</a>
+          <a href="#diff-de">Ansatz</a>
+          <a href="#contact-de">Kontakt</a>
+          <div class="language-bar">
+            <label for="lang-de" class="lang-label-de">DE</label>
+            <label for="lang-en" class="lang-label-en">EN</label>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Remote Softwarearchitektur weltweit</div>
+          <h1>Architektur mit Klarheit, Tiefe und Gewicht.</h1>
+          <p class="hero-copy">
+            Ich entwerfe und implementiere <strong>Architektur für komplexe Webplattformen</strong>.
+            Mein Fokus liegt auf Klarheit, Skalierbarkeit, Wartbarkeit und schneller Lieferung — gebaut für echte Systeme, reale Constraints und Teams, die Struktur wollen, ohne an Tempo zu verlieren.
+          </p>
+          <div class="hero-actions">
+            <a href="#contact-de" class="button">Gespräch starten</a>
+            <a href="https://technologyspeaks.com" class="button button-secondary">Live Demo ansehen</a>
+          </div>
+        </div>
+        <aside class="hero-panel">
+          <div class="panel-label">Positionierung</div>
+          <div class="panel-quote">Du entscheidest — nach Wert.</div>
+          <p class="panel-note">
+            Ausgewählte Kunden können mit einem echten Anwendungsfall beginnen. Erst wenn der Wert sichtbar ist, folgt die Vergütung aus Evidenz statt aus Versprechen.
+          </p>
+        </aside>
+      </section>
+
+      <section id="work-de">
+        <div class="section-intro">
+          <div class="section-tag">Leistungen</div>
+          <div>
+            <h2>Systeme, die unter Druck lesbar bleiben.</h2>
+            <p class="hero-copy">Meine Arbeit liegt an der Schnittstelle von Konzept, Architektur und Ausführung. Ziel ist nicht nur abstrakte Eleganz, sondern Systeme, die verständlich bleiben, während sie sich schnell bewegen.</p>
+          </div>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Architekturdesign</h3>
+            <p>Ich forme Anwendungsarchitekturen für komplexe Plattformen mit klaren Grenzen und langlebigen Abstraktionen.</p>
+          </article>
+          <article class="card">
+            <h3>Umsetzung mit Absicht</h3>
+            <p>Ich halte nicht bei Diagrammen an. Ich validiere Architektur im Code, damit Entscheidungen in der Lieferung bestehen.</p>
+          </article>
+          <article class="card">
+            <h3>Remote-First</h3>
+            <p>Weltweite Zusammenarbeit mit Fokus auf präzise Kommunikation und entscheidungsstarke Führung.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="diff-de">
+        <div class="section-intro">
+          <div class="section-tag">Warum anders?</div>
+          <div>
+            <h2>Klarheit ist keine Dekoration. Sie ist eine Strategie.</h2>
+            <p class="hero-copy">Viele Systeme werden teuer, weil sie strukturell vage sind. Ich sorge für Architekturen, die Entscheidungen explizit machen und Reibung reduzieren.</p>
+          </div>
+        </div>
+        <div class="card-grid" style="grid-template-columns: 1.1fr 0.9fr;">
+          <div class="card">
+            <h3>Was zählt</h3>
+            <ul class="detail-list">
+              <li>Klare Architektur für komplexe Domänen</li>
+              <li>Skalierung ohne strukturelle Panik später</li>
+              <li>Wartbarkeit, die das Tempo respektiert</li>
+              <li>Kohärenz statt zufälliger Drift</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Was Kunden erhalten</h3>
+            <ul class="detail-list">
+              <li>Systeme, die leichter zu verstehen sind</li>
+              <li>Technische Führung basierend auf Fakten</li>
+              <li>Pragmatismus ohne Qualitätsverlust</li>
+              <li>Präzise Remote-Zusammenarbeit</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="value-de">
+        <div class="value-box">
+          <h2 style="font-size: 3rem;">Wert zuerst. Entscheidung nach Evidenz.</h2>
+          <p class="hero-copy">„Du entscheidest — nach Wert“ bedeutet, dass die Zusammenarbeit mit einem echten Case beginnt, nicht mit Verkaufsgesprächen. Der Kunde erlebt tatsächlichen Wert im Kontext — und bestimmt auf dieser Basis die Vergütung. Das ist ein Position des Vertrauens.</p>
+        </div>
+      </section>
+
+      <section id="links-de">
+        <div class="section-intro">
+          <div class="section-tag">Referenzen</div>
+          <div>
+            <h2>Sieh die Arbeit in ihrem eigenen Licht.</h2>
+            <div class="links-list">
+              <a href="https://technologyspeaks.com" target="_blank"><span>Live Demo</span><span>technologyspeaks.com</span></a>
+              <a href="https://github.com/anjunar" target="_blank"><span>GitHub</span><span>github.com/anjunar</span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact-de" style="border: none;">
+        <div class="hero">
+          <div>
+            <h2>Wenn das Problem echt ist, können wir sprechen.</h2>
+            <p class="hero-copy">Ich interessiere mich für Kooperationen, bei denen Architektur zählt — Produkte und Systeme, die mehr als nur oberflächliche Entwicklung benötigen.</p>
+            <div class="hero-actions">
+              <a href="mailto:patrick@example.com" class="button">patrick@example.com</a>
+            </div>
+          </div>
+          <div class="hero-panel">
+            <h3>Positionierung</h3>
+            <ul class="detail-list">
+              <li>Softwarearchitekt für Webplattformen</li>
+              <li>Fokus auf Klarheit & Skalierung</li>
+              <li>Architektur, die überdauert</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">Patrick Bittner — Softwarearchitektur · Remote weltweit</footer>
+  </div>
+
+  <!-- ENGLISH CONTENT -->
+  <div class="lang-en-content" lang="en">
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="#"><span class="brand-mark"></span>Patrick Bittner</a>
+        <nav class="nav-links">
+          <a href="#work-en">What I do</a>
+          <a href="#diff-en">Approach</a>
+          <a href="#contact-en">Contact</a>
+          <div class="language-bar">
+            <label for="lang-de" class="lang-label-de">DE</label>
+            <label for="lang-en" class="lang-label-en">EN</label>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Remote-first software architecture worldwide</div>
+          <h1>Architecture with clarity, depth, and weight.</h1>
+          <p class="hero-copy">
+            I design and implement <strong>architecture for complex web platforms</strong>.
+            My focus is clarity, scalability, maintainability, and fast delivery — built for real systems, real constraints, and teams that want structure without losing momentum.
+          </p>
+          <div class="hero-actions">
+            <a href="#contact-en" class="button">Start a conversation</a>
+            <a href="https://technologyspeaks.com" class="button button-secondary">View live demo</a>
+          </div>
+        </div>
+        <aside class="hero-panel">
+          <div class="panel-label">Positioning</div>
+          <div class="panel-quote">You decide — after value.</div>
+          <p class="panel-note">
+            Selected clients can begin with a real use case first. Once the value is visible, compensation follows from evidence rather than promises.
+          </p>
+        </aside>
+      </section>
+
+      <section id="work-en">
+        <div class="section-intro">
+          <div class="section-tag">What I do</div>
+          <div>
+            <h2>I design systems that stay legible under pressure.</h2>
+            <p class="hero-copy">My work sits where concept, architecture, and execution meet. The goal is not abstract elegance alone, but systems that remain understandable while moving fast.</p>
+          </div>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Architecture design</h3>
+            <p>I shape application architecture for complex platforms with clear boundaries and durable abstractions.</p>
+          </article>
+          <article class="card">
+            <h3>Implementation with intent</h3>
+            <p>I do not stop at diagrams. I build and validate architecture in code so design decisions are proven in real delivery.</p>
+          </article>
+          <article class="card">
+            <h3>Remote collaboration</h3>
+            <p>Worldwide collaboration with a focus on clarity in communication and decisive technical guidance.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="diff-en">
+        <div class="section-intro">
+          <div class="section-tag">Why different?</div>
+          <div>
+            <h2>Clarity is not decoration. It is a delivery strategy.</h2>
+            <p class="hero-copy">Many systems become expensive because they are structurally vague. I care about architectures that make decisions explicit and reduce friction.</p>
+          </div>
+        </div>
+        <div class="card-grid" style="grid-template-columns: 1.1fr 0.9fr;">
+          <div class="card">
+            <h3>What matters</h3>
+            <ul class="detail-list">
+              <li>Clear architecture for complex domains</li>
+              <li>Scalability without structural panic later</li>
+              <li>Maintainability that respects delivery speed</li>
+              <li>Frontend and backend coherence</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>What clients get</h3>
+            <ul class="detail-list">
+              <li>Systems that are easier to reason about</li>
+              <li>Technical direction grounded in execution</li>
+              <li>Pragmatism without sacrificing quality</li>
+              <li>Precision and accountability</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="value-en">
+        <div class="value-box">
+          <h2 style="font-size: 3rem;">Value first. Decision after evidence.</h2>
+          <p class="hero-copy">“You decide — after value” means the engagement starts with a real use case, not a sales performance. The client experiences actual architectural value in context — then determines the compensation. This is not a discount mechanism. It is a position of confidence.</p>
+        </div>
+      </section>
+
+      <section id="links-en">
+        <div class="section-intro">
+          <div class="section-tag">Live references</div>
+          <div>
+            <h2>See the work in its own light.</h2>
+            <div class="links-list">
+              <a href="https://technologyspeaks.com" target="_blank"><span>Live demo</span><span>technologyspeaks.com</span></a>
+              <a href="https://github.com/anjunar" target="_blank"><span>GitHub</span><span>github.com/anjunar</span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact-en" style="border: none;">
+        <div class="hero">
+          <div>
+            <h2>When the problem is real, we can talk.</h2>
+            <p class="hero-copy">I am interested in collaborations where architecture matters — products and systems that need more than surface-level development.</p>
+            <div class="hero-actions">
+              <a href="mailto:anjunar@gmx.de" class="button">patrick@example.com</a>
+            </div>
+          </div>
+          <div class="hero-panel">
+            <h3>Positioning</h3>
+            <ul class="detail-list">
+              <li>Software architect for web platforms</li>
+              <li>Clarity & scalability focus</li>
+              <li>Architecture that aims to endure</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">Patrick Bittner — Software Architecture · Remote worldwide</footer>
+  </div>
+
+</body>
+</html>
